@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Tic-Tac-Toe // Space Sci-Fi Zero-G Protocol</title>
+    <meta name="description" content="A futuristic, zero-gravity Antigravity & Space Sci-Fi Tic-Tac-Toe interface featuring holographic 3D visuals, interactive cosmic physics, glassmorphism, and quantum AI.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cosmic Canvas for Zero-G Starfield, Nebula Dust & Orbit Rings -->
+    <canvas id="cosmic-canvas"></canvas>
+    
+    <!-- Background Grid & Parallax Optical Overlay -->
+    <div class="space-grid-overlay"></div>
+    <div class="nebula-vignette"></div>
+
+    <!-- Main 16:9 UI Container -->
+    <div class="scifi-viewport">
+        
+        <!-- Top Telemetry & Control Bar -->
+        <header class="top-nav-bar">
+            <div class="telemetry-chip left-chip">
+                <span class="pulse-beacon green"></span>
+                <span class="chip-text">ORBIT: ZERO-G // SECTOR 07</span>
+            </div>
+            
+            <div class="header-center">
+                <h1 id="gamehdng" class="cyber-title">
+                    <span class="title-glyph">▲</span>
+                    TIC-TAC-TOE
+                    <span class="title-glyph">▲</span>
+                </h1>
+                <div class="system-sub-badge">
+                    <span class="bracket">[</span>
+                    <span class="badge-text">ANTIGRAVITY QUANTUM PROTOCOL v2.4</span>
+                    <span class="bracket">]</span>
+                </div>
+            </div>
+
+            <div class="telemetry-chip right-chip">
+                <button id="mode-toggle-btn" class="hud-toggle-btn" title="Toggle Game Mode">
+                    <span class="toggle-icon">👥</span>
+                    <span id="mode-label">MODE: 2P LOCAL</span>
+                </button>
+                <button id="audio-toggle-btn" class="hud-toggle-btn audio-btn" title="Toggle Sci-Fi SFX">
+                    <span id="audio-icon">🔊</span>
+                    <span id="audio-label">AUDIO: ON</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Arena Grid Layout -->
+        <div class="main-arena">
+            
+            <!-- LEFT PANEL: PLAYER X -->
+            <aside class="player-panel panel-x" id="panel-x">
+                <div class="corner-bracket top-left"></div>
+                <div class="corner-bracket top-right"></div>
+                <div class="corner-bracket bottom-left"></div>
+                <div class="corner-bracket bottom-right"></div>
+
+                <div class="avatar-holo-wrapper cyan-glow">
+                    <div class="avatar-radar-ring"></div>
+                    <!-- Cyber Avatar X SVG -->
+                    <svg class="cyber-avatar-svg" viewBox="0 0 100 100">
+                        <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="rgba(0, 243, 255, 0.08)" stroke="#00f3ff" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(0, 243, 255, 0.4)" stroke-dasharray="4,4"/>
+                        <!-- Futuristic Pilot Visor -->
+                        <path d="M 30,42 L 70,42 L 64,58 L 36,58 Z" fill="#00f3ff" opacity="0.85"/>
+                        <circle cx="50" cy="50" r="8" fill="#ffffff" filter="drop-shadow(0 0 8px #00f3ff)"/>
+                        <line x1="20" y1="50" x2="80" y2="50" stroke="#00f3ff" stroke-width="1.5" opacity="0.6"/>
+                    </svg>
+                    <div class="avatar-symbol x-mark">✕</div>
+                </div>
+
+                <div class="player-meta">
+                    <span class="player-tag">CYBER PILOT</span>
+                    <h2 class="player-name neon-cyan">PLAYER X</h2>
+                    <div class="turn-status-badge" id="badge-x">
+                        <span class="beacon"></span>
+                        <span class="status-txt">ACTIVE TURN</span>
+                    </div>
+                </div>
+
+                <div class="hud-telemetry-box">
+                    <div class="tele-row">
+                        <span class="tele-lbl">STATUS</span>
+                        <span class="tele-val text-cyan" id="status-val-x">ENGAGED</span>
+                    </div>
+                    <div class="tele-row">
+                        <span class="tele-lbl">CHARGE</span>
+                        <span class="tele-val text-cyan">100% NOMINAL</span>
+                    </div>
+                    <div class="tele-progress-bar">
+                        <div class="tele-progress-fill cyan-fill" style="width: 100%;"></div>
+                    </div>
+                    <div class="tele-row mini">
+                        <span>FREQ: 432.8 THz</span>
+                        <span>GRAV: 0.00 G</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- CENTER: 3D FLOATING WEIGHTLESS BOARD -->
+            <main class="board-arena-center">
+                <div class="board-3d-scene" id="board-scene">
+                    
+                    <!-- Left Side Vertical HUD Gauge -->
+                    <div class="side-hud-gauge left-gauge">
+                        <div class="gauge-label">GRAV-FLUX</div>
+                        <div class="gauge-bars" id="gauge-bars-left">
+                            <span class="bar active"></span>
+                            <span class="bar active"></span>
+                            <span class="bar active"></span>
+                            <span class="bar active"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                        <div class="gauge-val">0.00 G</div>
+                    </div>
+
+                    <!-- The 3D Floating Game Board -->
+                    <div class="zero-g-board-wrapper" id="zero-g-board">
+                        
+                        <!-- Cybernetic Floating Chassis Frame -->
+                        <div class="board-frame-brackets">
+                            <span class="chassis-bracket tl"></span>
+                            <span class="chassis-bracket tr"></span>
+                            <span class="chassis-bracket bl"></span>
+                            <span class="chassis-bracket br"></span>
+                            <div class="chassis-header-tag">
+                                <span>ZERO-G MATRIX // 3x3 SECTOR</span>
+                                <span class="matrix-status" id="matrix-status-text">SYSTEM ARMED</span>
+                            </div>
+                        </div>
+
+                        <!-- 3x3 Interactive Game Tiles -->
+                        <div class="game-grid" id="game-grid">
+                            <button class="box" id="cell-0" data-index="0" aria-label="Cell 0, Row 1, Col 1"></button>
+                            <button class="box" id="cell-1" data-index="1" aria-label="Cell 1, Row 1, Col 2"></button>
+                            <button class="box" id="cell-2" data-index="2" aria-label="Cell 2, Row 1, Col 3"></button>
+                            <button class="box" id="cell-3" data-index="3" aria-label="Cell 3, Row 2, Col 1"></button>
+                            <button class="box" id="cell-4" data-index="4" aria-label="Cell 4, Row 2, Col 2"></button>
+                            <button class="box" id="cell-5" data-index="5" aria-label="Cell 5, Row 2, Col 3"></button>
+                            <button class="box" id="cell-6" data-index="6" aria-label="Cell 6, Row 3, Col 1"></button>
+                            <button class="box" id="cell-7" data-index="7" aria-label="Cell 7, Row 3, Col 2"></button>
+                            <button class="box" id="cell-8" data-index="8" aria-label="Cell 8, Row 3, Col 3"></button>
+                        </div>
+
+                        <!-- Holographic Winning Laser Line Beam -->
+                        <svg class="win-laser-svg" id="win-laser-svg" viewBox="0 0 300 300">
+                            <line id="win-laser-line" x1="0" y1="0" x2="0" y2="0" stroke="url(#laser-gradient)" stroke-width="6" stroke-linecap="round" />
+                            <defs>
+                                <linearGradient id="laser-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#00f3ff" />
+                                    <stop offset="50%" stop-color="#ffffff" />
+                                    <stop offset="100%" stop-color="#ff00aa" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+
+                        <!-- Subtle Holographic Grid Scanner Line -->
+                        <div class="hologram-scanline"></div>
+                    </div>
+
+                    <!-- Right Side Vertical HUD Gauge -->
+                    <div class="side-hud-gauge right-gauge">
+                        <div class="gauge-label">QUANTUM-CORE</div>
+                        <div class="gauge-bars" id="gauge-bars-right">
+                            <span class="bar active purple"></span>
+                            <span class="bar active purple"></span>
+                            <span class="bar active purple"></span>
+                            <span class="bar active purple"></span>
+                            <span class="bar active purple"></span>
+                            <span class="bar purple"></span>
+                            <span class="bar purple"></span>
+                            <span class="bar purple"></span>
+                        </div>
+                        <div class="gauge-val">99.4%</div>
+                    </div>
+
+                </div>
+            </main>
+
+            <!-- RIGHT PANEL: PLAYER O -->
+            <aside class="player-panel panel-o" id="panel-o">
+                <div class="corner-bracket top-left"></div>
+                <div class="corner-bracket top-right"></div>
+                <div class="corner-bracket bottom-left"></div>
+                <div class="corner-bracket bottom-right"></div>
+
+                <div class="avatar-holo-wrapper pink-glow">
+                    <div class="avatar-radar-ring pink-ring"></div>
+                    <!-- Cyber Avatar O SVG -->
+                    <svg class="cyber-avatar-svg" viewBox="0 0 100 100">
+                        <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="rgba(255, 0, 170, 0.08)" stroke="#ff00aa" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(255, 0, 170, 0.4)" stroke-dasharray="4,4"/>
+                        <!-- Cosmic Android Visor / Core -->
+                        <circle cx="50" cy="50" r="16" fill="rgba(255, 0, 170, 0.3)" stroke="#ff00aa" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="7" fill="#ffffff" filter="drop-shadow(0 0 8px #ff00aa)"/>
+                        <path d="M 32,50 Q 50,28 68,50" fill="none" stroke="#ff00aa" stroke-width="2" opacity="0.8"/>
+                    </svg>
+                    <div class="avatar-symbol o-mark">◯</div>
+                </div>
+
+                <div class="player-meta">
+                    <span class="player-tag">CYBER PILOT</span>
+                    <h2 class="player-name neon-pink">PLAYER O</h2>
+                    <div class="turn-status-badge inactive" id="badge-o">
+                        <span class="beacon"></span>
+                        <span class="status-txt">STANDBY</span>
+                    </div>
+                </div>
+
+                <div class="hud-telemetry-box">
+                    <div class="tele-row">
+                        <span class="tele-lbl">STATUS</span>
+                        <span class="tele-val text-pink" id="status-val-o">STANDBY</span>
+                    </div>
+                    <div class="tele-row">
+                        <span class="tele-lbl">WARP SYNC</span>
+                        <span class="tele-val text-pink">ONLINE</span>
+                    </div>
+                    <div class="tele-progress-bar">
+                        <div class="tele-progress-fill pink-fill" style="width: 85%;"></div>
+                    </div>
+                    <div class="tele-row mini">
+                        <span>FLUX: 99.4%</span>
+                        <span>AI CORE: SLEEP</span>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+
+        <!-- BOTTOM HUD: SCORE COUNTERS, BATTERY CHARGE & RESET CONTROLS -->
+        <footer class="bottom-hud-row">
+            
+            <!-- Bottom-Left Holographic Data Counter (Player X) -->
+            <div class="holo-score-card card-x">
+                <div class="score-card-header">
+                    <span class="card-icon cyan">◈</span>
+                    <span class="card-title">TELEMETRY // PILOT X</span>
+                </div>
+                <div class="score-display">
+                    <span class="score-number text-cyan" id="score-x">00</span>
+                    <div class="score-subdata">
+                        <span class="sub-label">VICTORIES</span>
+                        <span class="sub-streak" id="streak-x">STREAK: 0</span>
+                    </div>
+                </div>
+                <div class="score-graph-bar">
+                    <div class="score-bar-fill cyan-fill" id="bar-x" style="width: 50%;"></div>
+                </div>
+            </div>
+
+            <!-- Center Bottom: Sleek Capsule Reset & Battery Level Progress -->
+            <div class="center-controls-unit">
+                
+                <!-- Futuristic Progress & Battery-Level / Charge Meter -->
+                <div class="battery-meter-container">
+                    <div class="battery-meta">
+                        <span class="battery-label">
+                            <span class="lightning-icon">⚡</span>
+                            SECTOR CHARGE / TURN PROGRESS
+                        </span>
+                        <span class="battery-percent" id="turn-progress-text">TURN 1 // 9</span>
+                    </div>
+                    <div class="segmented-battery" id="segmented-battery">
+                        <div class="battery-segment active" data-step="1"></div>
+                        <div class="battery-segment" data-step="2"></div>
+                        <div class="battery-segment" data-step="3"></div>
+                        <div class="battery-segment" data-step="4"></div>
+                        <div class="battery-segment" data-step="5"></div>
+                        <div class="battery-segment" data-step="6"></div>
+                        <div class="battery-segment" data-step="7"></div>
+                        <div class="battery-segment" data-step="8"></div>
+                        <div class="battery-segment" data-step="9"></div>
+                        <div class="battery-terminal"></div>
+                    </div>
+                    <div class="battery-status-tag">GRAVITY STABILIZER: <span class="text-green">100% NOMINAL</span></div>
+                </div>
+
+                <!-- Sleek Glowing Capsule Reset Button -->
+                <div class="capsule-button-wrapper">
+                    <button id="reset" class="sleek-capsule-btn" aria-label="Reset Round">
+                        <span class="capsule-glimmer"></span>
+                        <span class="capsule-icon">↺</span>
+                        <span class="capsule-text">RESET SECTOR</span>
+                    </button>
+                    <button id="clear-scores-btn" class="hud-mini-btn" title="Clear all scores">
+                        RESET STATS
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom-Right Holographic Data Counter (Player O & Stalemates) -->
+            <div class="holo-score-card card-o">
+                <div class="score-card-header">
+                    <span class="card-icon pink">◈</span>
+                    <span class="card-title">TELEMETRY // PILOT O</span>
+                </div>
+                <div class="score-display">
+                    <span class="score-number text-pink" id="score-o">00</span>
+                    <div class="score-subdata">
+                        <span class="sub-label">VICTORIES</span>
+                        <span class="sub-streak text-purple" id="score-ties">STALEMATES: 0</span>
+                    </div>
+                </div>
+                <div class="score-graph-bar">
+                    <div class="score-bar-fill pink-fill" id="bar-o" style="width: 50%;"></div>
+                </div>
+            </div>
+
+        </footer>
+
+    </div>
+
+    <!-- Holographic Transmission Modal for Winner / Draw -->
+    <div class="msg-container hide" id="msg-container">
+        <div class="modal-backdrop"></div>
+        <div class="hologram-modal">
+            <div class="holo-border-corner tl"></div>
+            <div class="holo-border-corner tr"></div>
+            <div class="holo-border-corner bl"></div>
+            <div class="holo-border-corner br"></div>
+
+            <div class="modal-header">
+                <div class="hologram-transmission-ring" id="transmission-icon">
+                    <span class="holo-icon-symbol">✦</span>
+                </div>
+                <div class="transmission-sub">INCOMING TRANSMISSION // ZERO-G SECTOR 07</div>
+            </div>
+
+            <p id="msg" class="winner-message">PILOT X DOMINATION ACHIEVED</p>
+            
+            <div class="modal-stats-card">
+                <div class="modal-stat-col">
+                    <span class="stat-lbl">MOVES PLAYED</span>
+                    <span class="stat-num" id="modal-moves-count">5</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="modal-stat-col">
+                    <span class="stat-lbl">TOTAL ROUNDS</span>
+                    <span class="stat-num" id="modal-round-count">1</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="modal-stat-col">
+                    <span class="stat-lbl">GRAVITY FIELD</span>
+                    <span class="stat-num text-green">STABLE</span>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="newgame" class="modal-action-btn primary-btn">
+                    <span class="btn-glow"></span>
+                    <span class="btn-txt">COMMENCE NEXT SORTIE</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
