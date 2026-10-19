@@ -1,4 +1,4 @@
-# 🌌 Antigravity Tic-Tac-Toe // Space Sci-Fi Zero-G Protocol
+# 🌌Tic-Tac-Toe 
 
 A futuristic, zero-gravity Antigravity & Space Sci-Fi Tic-Tac-Toe web game featuring 3D holographic visuals, interactive cosmic physics, glassmorphism, procedural Web Audio SFX, and Quantum Minimax AI.
 
